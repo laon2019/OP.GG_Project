@@ -4,7 +4,6 @@ import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
 import { getUserInfo } from "../redux/actions/userAction";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
@@ -21,9 +20,11 @@ const Navigation = () => {
     navigate(`/summoner/${searchQuery}`);
   };
 
-  useEffect(() => {
-    console.log(userInfo);
-  }, [userInfo]);
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleSearch();
+    }
+  };
 
   return (
     <Navbar
@@ -51,6 +52,7 @@ const Navigation = () => {
               className="me-2"
               aria-label="Search"
               onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyPress={handleKeyPress}
             />
             <Button variant="outline-success" onClick={handleSearch}>
               Search
