@@ -1,12 +1,12 @@
 import React from "react";
 import Image from "react-bootstrap/Image";
 
-const RankInfo = ({ rank, rankImage, points, wins, losses, winrate }) => {
+const RankInfo = ({ rankInfo }) => {
   return (
     <div style={{ padding: "10px", margin: "10px", display: "flex", alignItems: "center" }}>
       <div style={{ marginRight: "10px" }}>
         <Image
-          src={rankImage}
+          src={`/img/${rankInfo.tier}.jpeg`}
           rounded
           style={{
             width: "80px",
@@ -15,8 +15,8 @@ const RankInfo = ({ rank, rankImage, points, wins, losses, winrate }) => {
         />
       </div>
       <div style={{ display: "flex", flexDirection: "column", flex: 1, alignItems: "center", margin: "0 10px" }}>
-        <p>티어 {rank}</p>
-        <p>{points}P</p>
+        <p>{rankInfo.tier} {rankInfo.rank}</p>
+        <p>{rankInfo.leaguePoints}P</p>
       </div>
     </div>
   );

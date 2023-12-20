@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 
 const UserInfo = ({ user }) => {
   const userInfo = useSelector((state) => state.user.userInfo);
+  const leagueInfo = useSelector((state) => state.user.leagueInfo);
 
   return (
     <div>
@@ -21,7 +22,7 @@ const UserInfo = ({ user }) => {
             className="d-flex justify-content-center align-items-center"
           >
             <Image
-              src={user.profileIconUrl}
+              src={`http://ddragon.leagueoflegends.com/cdn/10.6.1/img/profileicon/${userInfo.profileIconId}.png`}
               rounded
               style={{
                 width: "120px",
@@ -36,7 +37,7 @@ const UserInfo = ({ user }) => {
             md={4}
             className="d-flex justify-content-center align-items-center"
           >
-            <h4 style={{ marginBottom: "5px" }}>{user.name}</h4>
+            <h4 style={{ marginBottom: "5px" }}>{userInfo.name}</h4>
             <h4 style={{ color: "#808080", margin: "10px" }}>{user.code}</h4>
           </Col>
           <Col
@@ -47,22 +48,12 @@ const UserInfo = ({ user }) => {
             <Tabs defaultActiveKey="solo" id="rank-tabs" className="mb-3">
               <Tab eventKey="solo" title="솔로 랭크">
                 <RankInfo
-                  rank={user.soloRank}
-                  rankImage={user.soloRankImage}
-                  points={user.soloRankPoints}
-                  wins={user.soloWins}
-                  losses={user.soloLosses}
-                  winrate={user.soloWinrate}
+                  rankInfo={leagueInfo[1]}
                 />
               </Tab>
               <Tab eventKey="free" title="자유 랭크">
                 <RankInfo
-                  rank={user.freeRank}
-                  rankImage={user.soloRankImage}
-                  points={user.soloRankPoints}
-                  wins={user.soloWins}
-                  losses={user.soloLosses}
-                  winrate={user.soloWinrate}
+                  rankInfo={leagueInfo[0]}
                 />
               </Tab>
             </Tabs>

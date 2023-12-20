@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { getUserInfo } from '../redux/actions/userAction';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch} from 'react-redux';
 import { InputGroup, FormControl, Button, Container } from "react-bootstrap";
 import { useNavigate } from 'react-router-dom';
 
@@ -9,10 +9,8 @@ const Home = () => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
 
-  const userInfo = useSelector((state) => state.user.userInfo);
-
-  const handleSearch = () => {
-    dispatch(getUserInfo(searchQuery));
+  const handleSearch = async () => {
+    await dispatch(getUserInfo(searchQuery));
     navigate(`/summoner/${searchQuery}`);
   };
 
@@ -21,10 +19,6 @@ const Home = () => {
       handleSearch();
     }
   };
-
-  useEffect(() => {
-    console.log(userInfo);
-  }, [userInfo]);
 
   return (
     <Container
@@ -38,7 +32,6 @@ const Home = () => {
     >
       <h1 style={{ textAlign: "center" }}>롤 전적 검색</h1>
       <div style={{ textAlign: "center" }}>
-        {/* React Bootstrap을 사용한 반응형 검색바 */}
         <InputGroup className="mb-3" style={{ width: "70%", margin: "auto" }}>
           <FormControl
             placeholder="게임 전적 검색"

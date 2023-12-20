@@ -3,6 +3,7 @@ import { getUserInfo } from '../actions/userAction';
 
 let initialState = {
     userInfo: {},
+    leagueInfo: {},
     status: "",
     error: null,
 };
@@ -12,7 +13,8 @@ const userSlice = createSlice({
     initialState,
     reducers: {
         getInfo: (state, action) => {
-            state.userInfo = action.payload.data;
+            state.userInfo = action.payload.userInfo;
+                state.leagueInfo = action.payload.leagueInfo;
         },
     },
     extraReducers: (builder) => {
@@ -22,7 +24,8 @@ const userSlice = createSlice({
             })
             .addCase(getUserInfo.fulfilled, (state, action) => {
                 state.status = 'succeeded';
-                state.userInfo = action.payload;
+                state.userInfo = action.payload.userInfo;
+                state.leagueInfo = action.payload.leagueInfo;
             })
             .addCase(getUserInfo.rejected, (state, action) => {
                 state.status = 'failed';

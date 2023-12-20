@@ -5,7 +5,7 @@ import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { getUserInfo } from "../redux/actions/userAction";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch} from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 
 const Navigation = () => {
@@ -13,16 +13,14 @@ const Navigation = () => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
 
-  const userInfo = useSelector((state) => state.user.userInfo);
-
-  const handleSearch = () => {
-    dispatch(getUserInfo(searchQuery));
+  const handleSearch2 = async () => {
+    await dispatch(getUserInfo(searchQuery));
     navigate(`/summoner/${searchQuery}`);
   };
 
-  const handleKeyPress = (e) => {
+  const handleKeyPress2 = (e) => {
     if (e.key === 'Enter') {
-      handleSearch();
+      handleSearch2();
     }
   };
 
@@ -52,9 +50,9 @@ const Navigation = () => {
               className="me-2"
               aria-label="Search"
               onChange={(e) => setSearchQuery(e.target.value)}
-              onKeyPress={handleKeyPress}
+              onKeyPress={handleKeyPress2}
             />
-            <Button variant="outline-success" onClick={handleSearch}>
+            <Button variant="outline-success" onClick={handleSearch2}>
               Search
             </Button>
           </Form>
