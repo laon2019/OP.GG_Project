@@ -30,7 +30,7 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
-  "homepage": "https://laon2019.github.io/OP.GG_Project/",
+  "homepage": "https://laon2019.github.io/op.gg_test/",
   "eslintConfig": {
     "extends": [
       "react-app",

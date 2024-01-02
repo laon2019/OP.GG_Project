@@ -31,6 +31,7 @@ export const getUserInfo = createAsyncThunk("summoners", async (userNickName, { 
 export const getAdditionalMatchDetails = createAsyncThunk(
     "summoners/additionalMatchDetails",
     async ({ userPuuid, start, count }, { rejectWithValue }) => {
+        const API_KEY = process.env.REACT_APP_API_KEY;
       try {
         const matchInfoApi = await api.get(
           `asia.api.riotgames.com/lol/match/v5/matches/by-puuid/${userPuuid}/ids?start=${start}&count=${count}&api_key=${API_KEY}`
