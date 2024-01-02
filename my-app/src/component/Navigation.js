@@ -5,7 +5,7 @@ import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { getUserInfo } from "../redux/actions/userAction";
-import { useDispatch} from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 
 const Navigation = () => {
@@ -13,27 +13,29 @@ const Navigation = () => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
 
-  const handleSearch2 = async () => {
-    await dispatch(getUserInfo(searchQuery));
-    navigate(`/summoner/${searchQuery}`);
+  const handleSearch = async () => {
+    if (searchQuery !== "") {
+      await dispatch(getUserInfo(searchQuery));
+      navigate(`/summoner/${searchQuery}`);
+    }
   };
 
-  const handleKeyPress2 = (e) => {
-    if (e.key === 'Enter') {
-      handleSearch2();
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      handleSearch();
     }
   };
 
   return (
     <Navbar
-      bg="dark"
+      bg="light"
       data-bs-theme="dark"
       expand="lg"
       className="bg-body-tertiary"
     >
       <Container fluid>
         <Navbar.Brand as={Link} to="/">
-          라온.gg
+          내 마음대로 전적 검색
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
@@ -41,8 +43,7 @@ const Navigation = () => {
             className="me-auto my-2 my-lg-0"
             style={{ maxHeight: "100px" }}
             navbarScroll
-          >
-          </Nav>
+          ></Nav>
           <Form className="d-flex">
             <Form.Control
               type="search"
@@ -50,9 +51,9 @@ const Navigation = () => {
               className="me-2"
               aria-label="Search"
               onChange={(e) => setSearchQuery(e.target.value)}
-              onKeyPress={handleKeyPress2}
+              onKeyPress={handleKeyPress}
             />
-            <Button variant="outline-success" onClick={handleSearch2}>
+            <Button variant="outline-danger" onClick={handleSearch}>
               Search
             </Button>
           </Form>

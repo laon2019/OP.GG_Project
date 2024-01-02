@@ -1,159 +1,72 @@
-import React from "react";
-import { Card, Row, Col, Image } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import { Card, Image, Button } from "react-bootstrap";
+import DefaultInfo from "./DefaultInfo";
+import ShowDetail from "./ShowDetail";
+import { useSelector } from "react-redux";
 
 const GameInfo = ({ game }) => {
+  const userInfo = useSelector((state) => state.user.userInfo);
+  const [halfLength, setHalfLength] = useState(
+    game.info.participants.length / 2
+  );
+  const [showDetails, setShowDetails] = useState(true);
+  const [thisGameUser, setThisGameUser] = useState(null);
+
+  useEffect(() => {
+    if (game) {
+      const userInGame = game.info.participants.find(
+        (user) => user.summonerName === userInfo.name
+      );
+      if (userInGame) {
+        setThisGameUser(userInGame);
+      }
+    }
+  }, [game, userInfo]);
+
+  const backgroundColor = thisGameUser?.win ? "#ECF2FF" : "#FFF1F3";
+  const buttonColor = thisGameUser?.win ? "primary" : "danger";
+  const borderColor = thisGameUser?.win ? "blue" : "red";
+
+  const handleToggleDetails = () => {
+    setShowDetails(!showDetails);
+  };
+
   return (
-    <Card.Body>
-      <Row>
-        <Col xs={12} md={2}>
-          <div>{`${game.name}`}</div>
-          <div>{`${game.result}`}</div>
-          <div>{`${game.gameTime}`}</div>
-        </Col>
-        <Col xs={12} md={6}>
-          <div style={{ display: "flex", alignItems: "center" }}>
-            <div style={{ position: "relative", marginRight: "10px" }}>
-              <Image
-                src={game.championIcon}
-                alt="Champion Icon"
-                thumbnail
-                style={{ width: "80px", height: "80px", padding: "0" }}
-              />
-              <div
-                style={{
-                  position: "absolute",
-                  bottom: 0,
-                  right: 0,
-                  backgroundColor: "black",
-                  color: "white",
-                  padding: "2px 7px",
-                  fontSize: "12px",
-                  borderRadius: "50%",
-                }}
-              ></div>
-            </div>
-
-            <Row>
-              <Col xs={6}>
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    flexDirection: "column",
-                  }}
-                >
-                  <div style={{ position: "relative"}}>
-                    <Image
-                      src={game.spell1Icon}
-                      alt="Spell 1 Icon"
-                      thumbnail
-                      style={{ width: "35px", height: "35px", padding: "0" }}
-                    />
-                  </div>
-                  <div style={{ position: "relative" }}>
-                    <Image
-                      src={game.spell2Icon}
-                      alt="Spell 2 Icon"
-                      thumbnail
-                      style={{ width: "35px", height: "35px", padding: "0" }}
-                    />
-                  </div>
-                </div>
-              </Col>
-              <Col xs={6}>
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    flexDirection: "column",
-                  }}
-                >
-                  <Image
-                    src={game.championRunes1}
-                    alt="Rune 1 Icon"
-                    thumbnail
-                    style={{
-                      width: "35px",
-                      height: "35px",
-                      marginBottom: "0px",
-                      padding: "0",
-                    }}
-                  />
-                  <Image
-                    src={game.championRunes2}
-                    alt="Rune 2 Icon"
-                    thumbnail
-                    style={{ width: "35px", height: "35px", padding: "0" }}
-                  />
-                </div>
-              </Col>
-            </Row>
-            <div>
-              <div>{`KDA: ${game.kills}/${game.deaths}/${game.assists}`}</div>
-              <div>{`평점: ${game.rating}`}</div>
-            </div>
-          </div>
-
-          <Row style={{ marginTop: "30px", marginLeft: "-5px", marginRight: "-5px" }}>
-            {game.itemIcons.map((itemIcon, index) => (
-              <Col xs={1} key={index} style={{ padding: "0" }}>
-                <Image
-                  src={itemIcon}
-                  alt={`Item ${index + 1}`}
-                  style={{
-                    width: "40px",
-                    height: "40px",
-                    borderRadius: "5px",
-                    padding: "0",
-                  }}
-                  thumbnail
-                />
-              </Col>
-            ))}
-          </Row>
-        </Col>
-        <Col xs={12} md={4}>
-          <Row>
-            <Col xs={6}>
-              {game.friendlyMinions.map((item, index) => (
-                <Col key={index}>
-                  <Image
-                    src={item[0]}
-                    alt={`Item ${index + 1}`}
-                    style={{
-                      width: "30px",
-                      height: "30px",
-                      borderRadius: "5px",
-                      padding: "0",
-                    }}
-                    thumbnail
-                  />
-                  {item[1]}
-                </Col>
-              ))}
-            </Col>
-            <Col xs={6}>
-              {game.enemyMinions.map((item, index) => (
-                <Col key={index}>
-                  <Image
-                    src={item[0]}
-                    alt={`Item ${index + 1}`}
-                    style={{
-                      width: "30px",
-                      height: "30px",
-                      borderRadius: "5px",
-                      padding: "0",
-                    }}
-                    thumbnail
-                  />
-                  {item[1]}
-                </Col>
-              ))}
-            </Col>
-          </Row>
-        </Col>
-      </Row>
-    </Card.Body>
+    <Card
+      style={{
+        width: "330px",
+        border: `2px solid ${borderColor}`,
+        margin: "10px",
+        backgroundColor: backgroundColor,
+      }}
+    >
+      <Card.Body
+        className="d-flex flex-column align-items-center justify-content-center"
+        style={{ padding: "10px 5px" }}
+      >
+        {showDetails ? (
+          <DefaultInfo
+            game={game}
+            thisGameUser={thisGameUser}
+            halfLength={halfLength}
+            borderColor={borderColor}
+            backgroundColor={backgroundColor}
+          />
+        ) : (
+          <ShowDetail game={game} halfLength={halfLength}
+          borderColor={borderColor}
+           />
+        )}
+        <Button
+          variant={buttonColor}
+          size="xs"
+          style={{ width: "280px" }}
+          onClick={handleToggleDetails}
+        >
+          {showDetails ? "자세히 보기" : "뒤로가기"}
+        </Button>
+      </Card.Body>
+    </Card>
   );
 };
 

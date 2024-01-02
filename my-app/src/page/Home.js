@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { getUserInfo } from '../redux/actions/userAction';
-import { useDispatch} from 'react-redux';
-import { InputGroup, FormControl, Button, Container } from "react-bootstrap";
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { getUserInfo } from "../redux/actions/userAction";
+import { useDispatch, useSelector } from "react-redux";
+import { InputGroup, FormControl, Button, Container, Image } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { getSummoners } from "../redux/actions/userAction";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -10,12 +11,14 @@ const Home = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const handleSearch = async () => {
-    await dispatch(getUserInfo(searchQuery));
-    navigate(`/summoner/${searchQuery}`);
+    if (searchQuery !== "") {
+      await dispatch(getUserInfo(searchQuery));
+      navigate(`/summoner/${searchQuery}`);
+    }
   };
 
   const handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       handleSearch();
     }
   };
@@ -40,7 +43,11 @@ const Home = () => {
             onChange={(e) => setSearchQuery(e.target.value)}
             onKeyPress={handleKeyPress}
           />
-          <Button variant="outline-secondary" id="button-addon2" onClick={handleSearch}>
+          <Button
+            variant="outline-secondary"
+            id="button-addon2"
+            onClick={handleSearch}
+          >
             검색
           </Button>
         </InputGroup>
