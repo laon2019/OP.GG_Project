@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/OP.GG_Project/static/css/main.b1d7ec7b.css",
+    "main.js": "/OP.GG_Project/static/js/main.6260b255.js",
+    "static/js/787.d4aba7ab.chunk.js": "/OP.GG_Project/static/js/787.d4aba7ab.chunk.js",
+    "index.html": "/OP.GG_Project/index.html",
+    "main.b1d7ec7b.css.map": "/OP.GG_Project/static/css/main.b1d7ec7b.css.map",
+    "main.6260b255.js.map": "/OP.GG_Project/static/js/main.6260b255.js.map",
+    "787.d4aba7ab.chunk.js.map": "/OP.GG_Project/static/js/787.d4aba7ab.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.b1d7ec7b.css",
+    "static/js/main.6260b255.js"
+  ]
+}
